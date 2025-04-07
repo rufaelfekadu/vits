@@ -16,6 +16,10 @@ import re
 from unidecode import unidecode
 from phonemizer import phonemize
 
+import sys
+sys.path.append('/home/hawau/projects/Arabic-Phonetiser')
+from phonetiseArabic import phonetise
+
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
@@ -96,5 +100,12 @@ def english_cleaners2(text):
   text = lowercase(text)
   text = expand_abbreviations(text)
   phonemes = phonemize(text, language='en-us', backend='espeak', strip=True, preserve_punctuation=True, with_stress=True)
+  phonemes = collapse_whitespace(phonemes)
+  return phonemes
+
+
+def arabic_cleaners(text):
+  '''Pipeline for Arabic text, including abbreviation expansion.'''
+  phonemes = phonetise(text)[1][0].replace(" sil","")
   phonemes = collapse_whitespace(phonemes)
   return phonemes
