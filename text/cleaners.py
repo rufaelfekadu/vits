@@ -106,6 +106,6 @@ def english_cleaners2(text):
 
 def arabic_cleaners(text):
   '''Pipeline for Arabic text, including abbreviation expansion.'''
-  phonemes = phonetise(text)[1][0].replace(" sil","")
-  phonemes = collapse_whitespace(phonemes)
+  # phonemes = phonetise(text)[1][0].replace(" sil","")
+  phonemes = collapse_whitespace(text.replace("_", "").replace("u\200b", ""))
   return phonemes
